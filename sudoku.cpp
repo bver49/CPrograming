@@ -56,6 +56,7 @@ void Sudoku::GiveQuestion()
 	for(int i=0;i<12;i++)
 		for(int j=0;j<12;j++)
 		{
+			if(i!=11 && j!=11)
 			if(fboard[i][j]!=-1)
 			{
 				int r=rand()%10;
@@ -82,6 +83,8 @@ void Sudoku::GiveQuestion()
 			board[x][y]=fboard[x][y];
 		}
 
+	Printboard(1);
+
 }
 
 
@@ -92,6 +95,7 @@ void Sudoku::ReadIn()
 		{
 			cin>>board[i][j];
 		}
+	Printboard(1);
 }
 
 
@@ -139,9 +143,9 @@ void Sudoku::record()
 
 void Sudoku::next()
 {
-	while( x<12 && y<12 && x>=0 && y>=0 && (board[x][y]>0||board[x][y]==-1))
+	while(x<12 && y<12 && x>=0 && y>=0 && (board[x][y]>0 ||board[x][y]==-1))
 	{
-		if(x==11 && y==10)
+		if(x==10 && y==11)
 		{
 			x=11;
 			y=11;
@@ -177,7 +181,6 @@ void Sudoku::Solve()
 	for(int j=0;j<144;j++)
 		for(int i=0;i<2;i++)
 			blank[j][i]=0;
-	Printboard(1);
 	no=0;
 	x=0;
 	y=0;
@@ -197,9 +200,13 @@ void Sudoku::Solve()
 			{
 				back();
 				no++;
-				for(int j=0;j<12;j++)
-					for(int i=0;i<12;i++)
-						answer[i][j]=board[i][j];
+				if(no<2)					
+				{
+					for(int j=0;j<12;j++)
+						for(int i=0;i<12;i++)
+							answer[i][j]=board[i][j];
+				}
+				
 			}
 		}
 		else if(board[x][y]==0)
@@ -244,6 +251,9 @@ void Sudoku::fill()
 					board[x][y]=i;
 					return;
 				}
+
 			}
 			board[x][y]=0;
+
+		
 }
